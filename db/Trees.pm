@@ -32,25 +32,17 @@ sub new {
 
 #**********************************************************
 
-=head2 take_data - take all data from db
-  Arguments:
-    $attr 
-    user_id
-    user_name
-    user_address
-    user_email
-    user_inform 
+=head2 add($attr)
+ 
 =cut
 
 #**********************************************************
-sub get_users {
+sub add {
   my $self = shift;
   my ($attr) = @_;
-
-  # Take the query from the db
-  my $stm = $self->query("SELECT id, user_name, user_address, user_email FROM user_inform;", undef, { COLS_NAME => 1 });
-  return $self->{list};
+  return $self->query_add('trees', $attr);
 }
+
 
 1;
 
