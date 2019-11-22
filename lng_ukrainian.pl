@@ -11,6 +11,10 @@ $lang{PARK_TRYLOVSKIY} = 'Парк Трильвського';
 $lang{TREE_NUMBER_REGISTRATION} = 'Дерево, реєстраційний номер';
 $lang{TREE_EDIT} = 'Редагування дерева';
 $lang{TREE_SEARCH} = 'Пошук дерева';
+$lang{ADD}='Додати';
+$lang{SUBMIT}='Додати';
+$lang{X}='Геолокація: Координата X';
+$lang{Y}='Геолокація: Координата Y';
 
 
 1;

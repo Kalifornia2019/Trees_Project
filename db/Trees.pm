@@ -4,7 +4,6 @@ use strict;
 use warnings FATAL => 'all';
 use parent qw( dbcore );
 
-
 #**********************************************************
 
 =head2 new - db connection
@@ -41,8 +40,9 @@ sub add {
   my $self = shift;
   my ($attr) = @_;
   return $self->query_add('trees', $attr);
+
 }
 
-
 1;
+
 

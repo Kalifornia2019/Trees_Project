@@ -1,0 +1,60 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings FATAL => 'all';
+use Trees::db::Trees;
+require Abills::Templates;
+our ($db, $admin, %conf, %lang, $html);
+our Trees $Trees = Trees->new($db, $admin, \%conf);
+
+#**********************************************************
+
+=head2 user_list()
+  show users,
+  can add, change, delete
+  Returns:
+  1
+=cut
+
+#**********************************************************
+sub trees_add {
+
+  #Abills::Base::_bp("name",\%FORM,{HEADER => 1});
+
+  #if ($FORM{add_form}) {
+  # Add template
+  $html->tpl_show(
+    _include('trees_add', 'Trees'),
+    {
+      SUBMIT => $html->form_input('add', $lang{ADD}, { TYPE => 'submit' }),
+
+    }
+  );
+
+  # }
+  #Adding a new tree to bd
+  if ($FORM{add}) {
+    $Trees->add(
+      {
+        TREE_AGE    => $FORM{AGE},
+        TREE_HEIGHT => $FORM{HEIGHT},
+        TREE_CIRCLE => $FORM{CIRCLE},
+        TREE_TYPE   => $FORM{ADD_TREE_SORT},
+        TREE_STATUS => $FORM{STATUS},
+        COMMENT     => $FORM{COMMENT},
+        X           => $FORM{X},
+        Y           => $FORM{Y},
+      }
+    );
+    if (!$Trees->{errno}) {
+      $html->message('info', $lang{SUCCESS});
+    }
+    else {
+      $html->message('err', $lang{ERROR}, $Trees->{errno} . " : " . $Trees->{errstr});
+    }
+  }
+
+}
+
+1;
+

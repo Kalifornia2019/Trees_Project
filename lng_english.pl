@@ -10,6 +10,10 @@ $lang{PARK_TRYLOVSKIY} = 'Tryluvskiy park';
 $lang{TREE_NUMBER_REGISTRATION} = 'Tree, number of registration';
 $lang{TREE_EDIT} = 'Edit tree';
 $lang{TREE_SEARCH} = 'Search the tree';
+$lang{ADD}='Add';
+$lang{SUBMIT}='Submit';
+$lang{X} = 'Geolocation: Coordinate X';
+$lang{Y} = 'Geolocation: Coordinate Y';
 
 1;
 

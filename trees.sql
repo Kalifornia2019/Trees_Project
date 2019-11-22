@@ -28,9 +28,13 @@ CREATE TABLE `trees` (
   `tree_age` int(45) NOT NULL COMMENT 'age of tree',
   `tree_height` int(45) NOT NULL COMMENT 'height of tree',
   `tree_circle` int(45) NOT NULL COMMENT 'circumference of tree',
-  `tree_status` varchar(100) NOT NULL DEFAULT '' COMMENT 'status of tree',
+  `tree_type` varchar(45) NOT NULL DEFAULT '' COMMENT 'type of tree',
+  `tree_status` varchar(45) NOT NULL DEFAULT '' COMMENT 'status of tree',
+  `comment` varchar(45) DEFAULT '' COMMENT 'comments for tree',
+  `x` double NOT NULL COMMENT 'Coordinate X',
+  `y` double NOT NULL COMMENT 'Coordinate Y',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,6 +43,7 @@ CREATE TABLE `trees` (
 
 LOCK TABLES `trees` WRITE;
 /*!40000 ALTER TABLE `trees` DISABLE KEYS */;
+INSERT INTO `trees` VALUES (1,'2019-11-20 12:20:38',34,54,23,'5','3','',0,0),(2,'2019-11-22 10:12:28',20,5,2,'Ясен','+','',0,0),(3,'2019-11-22 13:23:43',50,20,12,'Дуб','32','',344.45,32.65);
 /*!40000 ALTER TABLE `trees` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-11-19 11:21:19
+-- Dump completed on 2019-11-22 15:33:27
