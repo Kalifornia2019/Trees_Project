@@ -43,6 +43,41 @@ sub add {
 
 }
 
+#**********************************************************
+
+=head2 search($attr)
+
+=cut
+
+#**********************************************************
+sub search {
+
+  my $self = shift;
+  my ($attr) = @_;
+
+  my $WHERE = $self->search_former(
+    $attr,
+    [ [ 'TREE_AGE', 'INT', 'd.TREE_AGE', 1 ], [ 'TREE_HEIGHT', 'INT', 'd.TREE_HEIGHT', 1 ], [ 'TREE_CIRCLE', 'INT', 'd.TREE_CIRCLE', 1 ], [ 'TREE_TYPE', 'INT', 'd.TREE_TYPE', 1 ], [ 'TREE_STATUS', 'INT', 'd.TREE_STATUS', 1 ], [ 'X', 'FLOAT', 'd.X', 1 ], [ 'Y', 'FLOAT', 'd.Y', 1 ], ],
+    {
+      WHERE => 1
+    }
+  );
+
+  $self->query(
+    "SELECT
+    $self->{SEARCH_FIELDS}
+    id, tree_age, tree_height, tree_circle, tree_type, tree_status,x,y
+    FROM trees d
+    $WHERE;
+     ",
+    undef,
+    $attr
+  );
+
+  return $self->{list};
+
+}
+
+#**********************************************************
+
 1;
-
-

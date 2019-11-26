@@ -21,17 +21,19 @@ sub trees_add {
 
   #Abills::Base::_bp("name",\%FORM,{HEADER => 1});
 
-  #if ($FORM{add_form}) {
-  # Add template
-  $html->tpl_show(
-    _include('trees_add', 'Trees'),
-    {
-      SUBMIT => $html->form_input('add', $lang{ADD}, { TYPE => 'submit' }),
+  if ($FORM{add_form}) {
 
-    }
-  );
+    # Add template
+    $html->tpl_show(
+      _include('trees_add', 'Trees'),
+      {
+        SUBMIT => $html->form_input('add', $lang{ADD}, { TYPE => 'submit' }),
 
-  # }
+      }
+    );
+
+  }
+
   #Adding a new tree to bd
   if ($FORM{add}) {
     $Trees->add(
@@ -54,6 +56,82 @@ sub trees_add {
     }
   }
 
+  #if ($FORM{search_form}) {
+  # Add search template 
+  $html->tpl_show(
+    _include('trees_search', 'Trees'),
+    {
+      SEARCH => $html->form_input('search', $lang{TREE_SEARCH}, { TYPE => 'submit' }),
+
+    }
+  );
+
+  if ($FORM{search}) {
+    my $lest = $Trees->search(
+      {
+        TREE_AGE    => $FORM{AGE},
+        TREE_HEIGHT => $FORM{HEIGHT},
+        TREE_CIRCLE => $FORM{CIRCLE},
+        TREE_TYPE   => $FORM{ADD_TREE_SORT},
+        TREE_STATUS => $FORM{STATUS},
+        X           => $FORM{X},
+        Y           => $FORM{Y},
+      }
+    );
+    if (!$Trees->{errno}) {
+      $html->message('info', $lang{SUCCESS});
+
+    }
+    else {
+      $html->message('err', $lang{ERROR}, $Trees->{errno} . " : " . $Trees->{errstr});
+    }
+
+    # output header of table from search form
+
+    my $table = $html->table(
+      {
+        width   => '100%',
+        caption => 'Trees',
+        border  => 2,
+        title   => [ 'id', $lang{TREE_AGE}, $lang{TREE_HEIGHT}, $lang{TREE_CIRCUMFERENCE}, $lang{TREE_TYPE}, $lang{TREE_STATUS}, $lang{X}, $lang{Y}, '-', '-' ],
+        cols_align => [ 'center', 'center', 'center', 'center', 'center', 'center', 'center' ],
+        pages      => $Trees->{TOTAL},
+        ID         => 'COMPANY_ID'
+      }
+    );
+
+    my $list = $Trees->search(
+      {
+        TREE_AGE    => $FORM{AGE},
+        TREE_HEIGHT => $FORM{HEIGHT},
+        TREE_CIRCLE => $FORM{CIRCLE},
+        TREE_TYPE   => $FORM{ADD_TREE_SORT},
+        TREE_STATUS => $FORM{STATUS},
+        X           => $FORM{X},
+        Y           => $FORM{Y},
+        ,
+        COLS_NAME => 1
+      }
+    );
+
+    # output data of table from search form
+    foreach my $line (@$list) {
+      $table->addrow(
+        $line->{id},
+        $line->{tree_age},
+        $line->{tree_height},
+        $line->{tree_circle},
+        $line->{tree_type},
+        $line->{tree_status},
+        $line->{x},
+        $line->{y}
+
+      );
+    }
+
+    print $table->show();
+
+  }
 }
 
 1;
