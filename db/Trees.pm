@@ -7,13 +7,11 @@ use parent qw( dbcore );
 #**********************************************************
 
 =head2 new - db connection
-
   Arguments:
     $attr   - Extra attributes
     $db
     $admin
     $CONF
-
   
 =cut
 
@@ -46,7 +44,6 @@ sub add {
 #**********************************************************
 
 =head2 search($attr)
-
 =cut
 
 #**********************************************************
@@ -57,27 +54,126 @@ sub search {
 
   my $WHERE = $self->search_former(
     $attr,
-    [ [ 'TREE_AGE', 'INT', 'd.TREE_AGE', 1 ], [ 'TREE_HEIGHT', 'INT', 'd.TREE_HEIGHT', 1 ], [ 'TREE_CIRCLE', 'INT', 'd.TREE_CIRCLE', 1 ], [ 'TREE_TYPE', 'INT', 'd.TREE_TYPE', 1 ], [ 'TREE_STATUS', 'INT', 'd.TREE_STATUS', 1 ], [ 'X', 'FLOAT', 'd.X', 1 ], [ 'Y', 'FLOAT', 'd.Y', 1 ], ],
+    [ [ 'TREE_TYPE', 'INT', 'd.TREE_TYPE', 1 ], [ 'TREE_STATUS', 'INT', 'd.TREE_STATUS', 1 ], ],
     {
       WHERE => 1
     }
   );
 
-  $self->query(
-    "SELECT
+  my $we  = $attr->{TREE_AGE};
+  my $we1 = $attr->{TREE_AGE2};
+
+  if ($WHERE) {
+
+    if ($we) {
+      if ($we1) {
+        my $WHERE1 = $WHERE . " AND tree_age>=$we AND tree_age<=$we1";
+        $self->query(
+          "SELECT
     $self->{SEARCH_FIELDS}
     id, tree_age, tree_height, tree_circle, tree_type, tree_status,x,y
     FROM trees d
-    $WHERE;
+    $WHERE1 ; 
      ",
-    undef,
-    $attr
-  );
+          undef,
+          $attr
+        );
 
-  return $self->{list};
+        return $self->{list};
+      }
 
+      else {
+        my $WHERE1 = $WHERE . " AND tree_age>=$we";
+        $self->query(
+          "SELECT
+    $self->{SEARCH_FIELDS}
+    id, tree_age, tree_height, tree_circle, tree_type, tree_status,x,y
+    FROM trees d
+    $WHERE1; 
+     ",
+          undef,
+          $attr
+        );
+
+        return $self->{list};
+
+      }
+
+    }
+    else {
+      $self->query(
+        "SELECT
+    $self->{SEARCH_FIELDS}
+    id, tree_age, tree_height, tree_circle, tree_type, tree_status,x,y
+    FROM trees d
+    $WHERE; 
+     ",
+        undef,
+        $attr
+      );
+
+      return $self->{list};
+    }
+
+  }
+
+  if (!$WHERE) {
+
+    if ($we) {
+      if ($we1) {
+        my $WHERE1 = "WHERE tree_age>=$we AND tree_age<=$we1";
+        $self->query(
+          "SELECT
+    $self->{SEARCH_FIELDS}
+    id, tree_age, tree_height, tree_circle, tree_type, tree_status,x,y
+    FROM trees d
+    $WHERE1 ; 
+     ",
+          undef,
+          $attr
+        );
+
+        return $self->{list};
+      }
+
+      else {
+        my $WHERE1 = "WHERE tree_age>=$we";
+        $self->query(
+          "SELECT
+    $self->{SEARCH_FIELDS}
+    id, tree_age, tree_height, tree_circle, tree_type, tree_status,x,y
+    FROM trees d
+    $WHERE1; 
+     ",
+          undef,
+          $attr
+        );
+
+        return $self->{list};
+
+      }
+
+    }
+
+    else {
+      $self->query(
+        "SELECT
+    $self->{SEARCH_FIELDS}
+    id, tree_age, tree_height, tree_circle, tree_type, tree_status,x,y
+    FROM trees d
+    $WHERE; 
+     ",
+        undef,
+        $attr
+      );
+
+      return $self->{list};
+    }
+
+  }
 }
 
 #**********************************************************
 
 1;
+

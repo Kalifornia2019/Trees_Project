@@ -14,7 +14,8 @@ $lang{ADD}='Add';
 $lang{SUBMIT}='Submit';
 $lang{X} = 'Geolocation: Coordinate X';
 $lang{Y} = 'Geolocation: Coordinate Y';
-
+$lang{FROM_AGE} = 'Age from';
+$lang{TO_AGE} = 'Age to';
 1;
 
 

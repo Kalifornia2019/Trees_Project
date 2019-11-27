@@ -14,26 +14,20 @@
             </div>
 
             <div class='form-group'>
-                <label class='col-md-3 control-label'>_{TREE_AGE}_</label>
+                <label class='col-md-3 control-label'>_{FROM_AGE}_</label>
                 <div class='col-md-9'>
                     <input type='text' class='form-control' name='AGE' value='%AGE%'>
                 </div>
             </div>
 
             <div class='form-group'>
-                <label class='col-md-3 control-label'>_{TREE_HEIGHT}_</label>
+                <label class='col-md-3 control-label'>_{TO_AGE}_</label>
                 <div class='col-md-9'>
-                    <input type='text' class='form-control' name='HEIGHT' value='%HEIGHT%'>
+                    <input type='text' class='form-control' name='AGE2' value='%AGE2%'>
                 </div>
             </div>
 
-            <div class='form-group'>
-                <label class='col-md-3 control-label'>_{TREE_CIRCUMFERENCE}_</label>
-                <div class='col-md-9'>
-                    <input type='text' class='form-control' name='CIRCLE' value='%CIRCLE%'>
-                </div>
-            </div>
-
+            
             <div class='form-group'>
                 <label class='col-md-3 control-label'>_{TREE_STATUS}_</label>
                 <div class='col-md-9'>
@@ -41,19 +35,7 @@
                 </div>
             </div>
 
-            <div class='form-group'>
-                <label class='col-md-3 control-label'>_{X}_</label>
-                <div class='col-md-9'>
-                    <input type='text' class='form-control' name='X' value='%X%'>
-                </div>
-            </div>
-
-            <div class='form-group'>
-                <label class='col-md-3 control-label'>_{Y}_</label>
-                <div class='col-md-9'>
-                    <input type='text' class='form-control' name='Y' value='%Y%'>
-                </div>
-            </div>
+           
 
         </div>
 
