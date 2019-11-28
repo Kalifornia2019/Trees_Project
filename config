@@ -1,4 +1,8 @@
 #Iner_ID : Main or Sub or if -1 user menu func list
-%FUNCTIONS_LIST = ("01:0:Trees:trees_add:"             => 5);
+%FUNCTIONS_LIST = ("01:0:Trees:trees_add:"             => 5,
+                   "02:1:Search:search_form:"             => 5,
+                   "03:1:Count:search_count:"             => 5,
+
+);
 
 1;

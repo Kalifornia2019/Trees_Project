@@ -45,12 +45,5 @@
 
     </div>
 
-    <div class="col-md-6 col-sm-4">
-        <div id="map" style="width: 100%; height: 500px;"></div>
-        <script>
-        </script>
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcgmg0BOrLHp-C7lyKJEM176fR6g_lIUA&callback=initMap">
-        </script>
-    </div>
   
 </form>

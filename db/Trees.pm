@@ -42,9 +42,28 @@ sub add {
 }
 
 #**********************************************************
+=head2 search_count($attr)
+  Arguments:
+  Returns:
+=cut
+#**********************************************************
+sub search_count{
+  my $self = shift;
+  my ($attr) = @_;
+
+  $self->query("SELECT COUNT(*) AS number_trees, SUM(tree_age) AS sage_trees FROM trees;",undef,{COLS_NAME => 1});
+   
+  return $self->{list};
+}
+
+#**********************************************************
+
+
+
 
 =head2 search($attr)
 =cut
+
 
 #**********************************************************
 sub search {

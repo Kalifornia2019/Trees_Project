@@ -9,19 +9,14 @@ our Trees $Trees = Trees->new($db, $admin, \%conf);
 
 #**********************************************************
 
-=head2 user_list()
-  show users,
-  can add, change, delete
-  Returns:
-  1
+=head2 trees_add()
+
 =cut
 
 #**********************************************************
 sub trees_add {
 
   #Abills::Base::_bp("name",\%FORM,{HEADER => 1});
-
-  if ($FORM{add_form}) {
 
     # Add template
     $html->tpl_show(
@@ -54,9 +49,19 @@ sub trees_add {
     else {
       $html->message('err', $lang{ERROR}, $Trees->{errno} . " : " . $Trees->{errstr});
     }
-  }
+  
 
-  #if ($FORM{search_form}) {
+}
+
+
+  #**********************************************************
+
+=head2 search_form()
+
+=cut
+
+#**********************************************************
+  sub search_form {
   # Add search template 
   $html->tpl_show(
     _include('trees_search', 'Trees'),
@@ -83,6 +88,21 @@ sub trees_add {
     else {
       $html->message('err', $lang{ERROR}, $Trees->{errno} . " : " . $Trees->{errstr});
     }
+#Delete a tree
+if ($FORM{del}) {
+
+    $Trees->del($FORM{del});
+    if (!$Trees->{errno}) {
+      $html->message('info', $lang{SUCCESS});
+    }
+    else {
+      $html->message('err', $lang{ERROR}, $Trees->{errno} . " : " . $Trees->{errstr});
+    }
+  }
+
+
+
+
 
     # output header of table from search form
 
@@ -112,6 +132,8 @@ sub trees_add {
       }
     );
 
+
+ 
     # output data of table from search form
     foreach my $line (@$list) {
       $table->addrow(
@@ -122,15 +144,64 @@ sub trees_add {
         $line->{tree_type},
         $line->{tree_status},
         $line->{x},
-        $line->{y}
+        $line->{y},
+        $html->button('change', 'change', { TYPE => 'submit' }),
+        $html->button('del', 'del', { class => 'btn' }),
 
       );
+
     }
+
 
     print $table->show();
 
-  }
+
+
 }
+}
+
+#**********************************************************
+
+=head2 search_count()
+
+=cut
+
+#**********************************************************
+
+sub search_count {
+    my $Trees = Trees->new($db, $admin, \%conf);
+    
+
+my $result = $Trees->search_count();
+my $count = $result->[0]->{number_trees};
+my $count_age = $result->[0]->{sage_trees};
+
+
+ if ( $result ){
+
+my $rez_o2 = ($count*2.5);
+my $rez_co2 = ($count*1.7);
+my $rez_mid_age = ($count_age/$count);
+ $html->tpl_show(
+    _include('additional_parametres', 'Trees'),{O2 => $rez_o2,
+CO2 => $rez_co2,
+AGE => $rez_mid_age 
+},
+
+);
+
+
+
+
+}
+
+
+}
+
+
+
+
+
 
 1;
 

@@ -5,16 +5,21 @@
 
     <div class='box box-form box-primary form-horizontal'>
         <div class='box-body'>
+           _{O2}_ %O2%
+</div>
+<div class='box-body'>
+            _{CO2}_ %CO2%
+</div>
+<div class='box-body'>
+            _{MID_AGE}_ %AGE%
 
- <img src="../Trees/images/func.jpg" alt="ecology tree" width="200"
-         height="80">
+</div>
 
         </div>
 
         <div class='box-footer'>
-            %O2%
-            %CO2%
-            %AGE%
+           
+ <img src="/img/func1.jpg">
         </div>
 
     </div>
