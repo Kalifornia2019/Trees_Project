@@ -1,4 +1,4 @@
-<div class="box box-success no-padding""> < div class = "box-header with-border" >
+<div class="box box-success no-padding"">
     <h3 class="box-title">Пошук дерева</h3>
     <div class="box-tools pull-right">
       <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -50,7 +50,6 @@
             // Initialize and add the map
             function initMap() {
               var locations = [
-                  //['%PLACE%', %COORD_X%, %COORD_Y%, %LOCATION_ID%],
                   %LOCATIONS_ARR%
               ];
               var map = new google.maps.Map(document.getElementById('map'), {
@@ -63,6 +62,7 @@
               for (i = 0; i < locations.length; i++) {
                   marker = new google.maps.Marker({
                   position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+				
                   map: map
               });
               google.maps.event.addListener(marker, 'click', (function (marker, i) {
@@ -81,3 +81,4 @@
       </div>
     </div>
 </div>
+

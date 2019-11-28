@@ -1,84 +1,65 @@
-<div class="%STYLE_BOX%"> < div class = "box-header with-border" >
-        <h3 class="box-title">Редагування дерева</h3>
-        <div class="box-tools pull-right">
+<form action='$SELF_URL' method='GET'> <div class="box box-success no-padding">
+    <input type='hidden' name='index' value='$index'>
+    <input type='hidden' name='ID' value='%ID%'>
+
+
+    <div class='box box-theme box-form'>
+        <div class='box-header'><h4 class='box-title'>Редагувати дерево</h4></div>
+  <div class="box-tools pull-right">
             <button type="button" class="btn btn-default btn-xs" data-widget="collapse"><i class="fa fa-minus"></i>
             </button>
         </div>
-    </div>
-    <form role="form" method="get">
-      <div class="box-body">
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Дата занесення дерева в реєстр:</label>
-							<label class="control-label col-md-4">%DATE%</label>
-                            <div class="col-md-8">
-                                <input type=text class='form-control ip-input' name='DATE' value='%DATE%'> 
-                            </div>
-                        </div>
-                    </div>
-					<div class="box-body">
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Реєстраційний номер дерева:</label>
-							<label class="control-label col-md-4">%ID%</label>
-                            <div class="col-md-8">
-                                <input type=text class='form-control ip-input' name='ID' value='%ID%'>
-                            </div>
-                        </div>
-                    </div>
+   
                     <div class="box-body">
                         <div class="form-group">
                             <label class="control-label col-md-4">Порода дерева:</label>
-							<label class="control-label col-md-4">%SORT%</label>
-                            <div class="col-md-8">
-                                <input type=text class='form-control ip-input' name='ADD_TREE_SORT' value='%ADD_TREE_SORT%'>
+                            <div class="col-md-12">
+                                %SORT%
                             </div>
                         </div>
                     </div>
 					 <div class="box-body">
                         <div class="form-group">
                             <label class="control-label col-md-4">Вік дерева:</label>
-							<label class="control-label col-md-4">%AGE%</label>
-                            <div class="col-md-8">
-                                <input type=text class='form-control ip-input' name='AGE' value='%AGE%'>
+                            <div class="col-md-12">
+                                %AGE%
                             </div>
                         </div>
                     </div>
                     <div class="box-body">
                         <div class="form-group">
                             <label class="control-label col-md-4">Висота дерева:</label>
-							<label class="control-label col-md-4">%HEIGHT%</label>
-                            <div class="col-md-8">
-                                <input type=text class='form-control ip-input' name='HEIGHT' value='%HEIGHT%'>
+                            <div class="col-md-12">
+                                %HEIGHT%
                             </div>
                         </div>
                     </div>
 					  <div class="box-body">
                         <div class="form-group">
                             <label class="control-label col-md-4">Окружність стовбура дерева:</label>
-							<label class="control-label col-md-4">%CIRCLE%</label>
-                            <div class="col-md-8">
-                                 <input type=text class='form-control ip-input' name='CIRCLE' value='%CIRCLE%'>
+                            <div class="col-md-12">
+                               %CIRCLE%
                             </div>
                         </div>
                     </div>
                     <div class="box-body">
                         <div class="form-group">
                             <label class="control-label col-md-4">Статус</label>
-							<label class="control-label col-md-4">%STATUS%</label>
-                            <div class="col-md-8">
-                                <input type=text class='form-control ip-input' name='STATUS' value='%STATUS%'>
+                            <div class="col-md-12">
+                                %STATUS%
                             </div>
                         </div>
                     </div>
                     <div class="box-body">
                         <div class="form-group">
                             <label class="control-label col-md-4">Коментар</label>
-                            <div class="col-md-8">
+                            <div class="col-md-12">
                                 <textarea class="form-control" id="COMMENTS" name="COMMENTS" rows="8"></textarea>
                             </div>
                         </div>
                     </div>
         <div class="box-footer">
-            %BUTTON_CHANGE%
+            %BUTTON_EDIT%
         </div>
-    </form>
-</div>
+</form>
+

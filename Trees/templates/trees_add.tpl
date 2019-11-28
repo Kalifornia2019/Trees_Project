@@ -4,12 +4,12 @@
 
 
     <div class='box box-theme box-form'>
-        <div class='box-header'><h4 class='box-title'>_{ACTION}_</h4></div>
+        <div class='box-header'><h4 class='box-title'>_{TREE_ADD}_</h4></div>
         <div class='box-body'>
  
 
             <div class="form-group">
-                <label class="control-label col-md-4">Порода дерева:</label>
+                <label class="control-label col-md-4">_{TREE_TYPE}_</label>
                 <div class="col-md-8">
                     %SORT%
                 </div>
@@ -17,7 +17,7 @@
 
 
             <div class="form-group">
-                <label class="control-label col-md-4">Вік дерева:</label>
+                <label class="control-label col-md-4">_{TREE_AGE}_</label>
                 <div class="col-md-8">
                     %AGE%
                 </div>
@@ -25,7 +25,7 @@
 
 
             <div class="form-group">
-                <label class="control-label col-md-4">Висота дерева:</label>
+                <label class="control-label col-md-4">_{TREE_HEIGHT}_</label>
                 <div class="col-md-8">
                     %HEIGHT%
                 </div>
@@ -33,7 +33,7 @@
 
 
             <div class="form-group">
-                <label class="control-label col-md-4">Окружність стовбура дерева:</label>
+                <label class="control-label col-md-4">_{TREE_CIRCLE}_</label>
                 <div class="col-md-8">
                     %CIRCLE%
                 </div>
@@ -41,7 +41,7 @@
 
 
             <div class="form-group">
-                <label class="control-label col-md-4">Статус</label>
+                <label class="control-label col-md-4">_{TREE_STATUS}_</label>
                 <div class="col-md-8">
                     %STATUS%
                 </div>
@@ -49,7 +49,7 @@
 
 
             <div class="form-group">
-                <label class="control-label col-md-4">Коментар</label>
+                <label class="control-label col-md-4">_{COMMENT}_</label>
                 <div class="col-md-8">
                     <textarea class="form-control" id="COMMENT" name="COMMENT" rows="8"></textarea>
                 </div>
@@ -60,7 +60,7 @@
             </div>
 </div>
 
-                <div class="col-md-12">
+                
                   <input hidden="" id="value_x" name="VALUE_X" value="">
                   <input hidden="" id="value_y" name="VALUE_Y" value="">
                 <div id="map" style="width: 100%; height: 300px"></div>
@@ -125,7 +125,7 @@ if (navigator.geolocation) {
                 <script async defer
                         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcgmg0BOrLHp-C7lyKJEM176fR6g_lIUA&callback=initMap">
                 </script>
-            </div>
+            
  </form>
 
 
