@@ -1,53 +1,53 @@
-<div class="box box-success no-padding"">
-    <h3 class="box-title">Пошук дерева</h3>
-    <div class="box-tools pull-right">
-      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-      </button>
-    </div>
-  </div>
-  <div class="box-body no-padding">
-    <div class="row">
-      <div class="col-md-6 col-sm-8">
-        <div class="box box-theme box-form">
-          <form role="form" method="get">
-            <div class="box-body">
-              <div class="form-group">
-                <label class="control-label col-md-3">Порода дерева</label>
-                <div class="col-md-9">
-                  %SORT%
+  
+<form action='$SELF_URL' METHOD=POST>
+
+    <input type='hidden' name='index' value=$index>
+    <input type='hidden' name='ID' value='%ID%'>
+
+    <div class='box box-form box-primary form-horizontal'>
+        <div class='box-body'>
+
+            <div class='form-group'>
+                <label class='col-md-3 control-label'>_{TREE_TYPE}_</label>
+                <div class='col-md-9'>
+                    <input type='text' class='form-control' name='ADD_TREE_SORT' value='%ADD_TREE_SORT%'>
                 </div>
-              </div>
             </div>
-            <div class="box-body">
-              <div class="form-group">
-                <label class="control-label col-md-3">Вік дерева</label>
-                <div class="col-md-3">
-                  %YEAR_FIRST%
+
+            <div class='form-group'>
+                <label class='col-md-3 control-label'>_{FROM_AGE}_</label>
+                <div class='col-md-9'>
+                    <input type='text' class='form-control' name='AGE' value='%AGE%'>
                 </div>
-                <label class="control-label col-md-3">До</label>
-                <div class="col-md-3">
-                  %YEAR_SECOND%
+            </div>
+
+            <div class='form-group'>
+                <label class='col-md-3 control-label'>_{TO_AGE}_</label>
+                <div class='col-md-9'>
+                    <input type='text' class='form-control' name='HEIGHT' value='%HEIGHT%'>
                 </div>
-              </div>
             </div>
-            <div class="box-body">
-              <div class="form-group">
-                <label class="control-label col-md-3">Статус</label>
-                <div class="col-md-9">
-                  %STATUS%
+
+            
+            <div class='form-group'>
+                <label class='col-md-3 control-label'>_{TREE_STATUS}_</label>
+                <div class='col-md-9'>
+                    <input type='text' class='form-control' name='STATUS' value='%STATUS%'>
                 </div>
-              </div>
             </div>
-            <div class="box-footer">
-              %BUTTON_SEARCH%
-            </div>
-          </form>
+
+           
+
         </div>
-      </div>
-      <div class="col-md-6 col-sm-4">
-        <div id="map" style="width: 100%; height: 500px;"></div>
-          <script>
-            // Initialize and add the map
+
+        <div class='box-footer'>
+            %SEARCH%
+        </div>
+
+    </div>
+
+    <div id="map" style="width: 100%; height: 300px"></div>
+   	<script>
             function initMap() {
               var locations = [
                   %LOCATIONS_ARR%
@@ -74,11 +74,7 @@
                             }
                         }
           </script>
-          <script async defer
-                  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcgmg0BOrLHp-C7lyKJEM176fR6g_lIUA&callback=initMap">
-          </script>
-        </div>
-      </div>
-    </div>
-</div>
-
+                <script async defer
+                        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcgmg0BOrLHp-C7lyKJEM176fR6g_lIUA&callback=initMap">
+                </script>
+</form>

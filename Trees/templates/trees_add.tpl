@@ -56,7 +56,7 @@
             </div>
             <div class="box-footer">
                 %BUTTON_ADD%
-                %BUTTON_CHANGE%
+                %SUBMIT%
             </div>
 </div>
 
