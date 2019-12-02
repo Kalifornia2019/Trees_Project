@@ -7,7 +7,6 @@ package Trees;
 use strict;
 use warnings FATAL => 'all';
 use parent qw( dbcore );
-use parent 'main';
 my ($admin, $CONF);
 
 #**********************************************************
@@ -280,17 +279,18 @@ sub del {
 
 #**********************************************************
 
-=head2 tree_change($attr)
+=head2 change($attr)
   Arguments:
   Returns:
 =cut
 
 #**********************************************************
-sub tree_change {
+sub change {
   my $self = shift;
   my ($attr) = @_;
-
-  $self->changes2(
+ 
+Abills::Base::_bp('',$attr);
+$self->changes(
     {
       CHANGE_PARAM => 'ID',
       TABLE        => 'trees',
@@ -298,9 +298,8 @@ sub tree_change {
     }
   );
 
-  return $self;
+return $self;
 }
-
 #**********************************************************
 
 =head2 search_count($attr)

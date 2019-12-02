@@ -196,16 +196,16 @@ my $button_edit   = $html->form_input('change', $lang{CHANGE}, {TYPE => 'submit'
 
     if ($FORM{change}) {
 Abills::Base::_bp("", \%FORM);
-      Trees->tree_change({
+      $Trees->change({
         ID            => $FORM{ID},
         #INDEX         => $index,
         TREE_AGE    => $FORM{TREE_AGE},
-       TREE_HEIGHT => $FORM{HEIGHT},
-        TREE_CIRCLE => $FORM{CIRCLE},
-        TREE_TYPE   => $FORM{SORT},
-       TREE_STATUS => $FORM{STATUS},
-        VALUE_X     => $FORM{VALUE_X},
-       VALUE_Y     => $FORM{VALUE_Y},
+       TREE_HEIGHT => $FORM{TREE_HEIGHT},
+        TREE_CIRCLE => $FORM{TREE_CIRCLE},
+        TREE_TYPE   => $FORM{TREE_TYPE},
+       TREE_STATUS => $FORM{TREE_STATUS},
+        #VALUE_X     => $FORM{VALUE_X},
+      # VALUE_Y     => $FORM{VALUE_Y},
         COMMENT     => $FORM{COMMENT},
  
       });
@@ -229,7 +229,8 @@ Abills::Base::_bp("", \%FORM);
       
         
         TITLE      => $lang{CHANGE},
-        ID         => $html->form_input('chg', $FORM{DRAW}, { TYPE => 'hidden' }),
+        #ID         => $html->form_input('change', $FORM{DRAW}, { TYPE => 'hidden' }),
+        ID         => $html->form_input('ID', $FORM{ID}, { TYPE => 'hidden' }),
       });
   
    return 1;
@@ -266,7 +267,11 @@ AGE => $rez_mid_age
 
 );
 }
+
+
+  return 1;
 }
+
 
 1;
 
