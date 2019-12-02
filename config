@@ -1,8 +1,17 @@
 #Iner_ID : Main or Sub or if -1 user menu func list
-%FUNCTIONS_LIST = ("01:0:Trees:trees_add:"             => 5,
-                   "02:1:Search:search_form:"             => 5,
-                   "03:1:Count:search_count:"             => 5,
+%FUNCTIONS_LIST = (
+  "01:0:$lang{TREE}:null:"                          => 5,
+  "02:1:$lang{TREE_ADD}:add_trees:"                 => 5,
+  "03:1:$lang{TREE_SEARCH}:search_form:"            => 5,
+  "04:1:$lang{ADDITIONAL_ALGORITHMS}:search_count:" => 5,
 
+);
+
+%USER_FUNCTION_LIST = (
+  "01:0:$lang{TREE}:null:"                          => 5,
+  "02:1:$lang{TREE_ADD}:add_trees:"                 => 5,
+  "03:1:$lang{TREE_SEARCH}:search_form:"            => 5,
+  "04:1:$lang{ADDITIONAL_ALGORITHMS}:search_count:" => 5,
 );
 
 1;
