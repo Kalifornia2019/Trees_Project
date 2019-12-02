@@ -70,12 +70,12 @@ sub trees_add {
 
     }
   );
-
+Abills::Base::_bp('tetrs', \%FORM);
   if ($FORM{search}) {
     my $lest = $Trees->search(
       {
         TREE_AGE    => $FORM{AGE},
-        TREE_AGE2    => $FORM{AGE2},
+        TREE_HEIGHT    => $FORM{HEIGHT},
         TREE_TYPE   => $FORM{ADD_TREE_SORT},
         TREE_STATUS => $FORM{STATUS},
 
@@ -88,18 +88,6 @@ sub trees_add {
     else {
       $html->message('err', $lang{ERROR}, $Trees->{errno} . " : " . $Trees->{errstr});
     }
-#Delete a tree
-if ($FORM{del}) {
-
-    $Trees->del($FORM{del});
-    if (!$Trees->{errno}) {
-      $html->message('info', $lang{SUCCESS});
-    }
-    else {
-      $html->message('err', $lang{ERROR}, $Trees->{errno} . " : " . $Trees->{errstr});
-    }
-  }
-
 
 
 
@@ -145,20 +133,100 @@ if ($FORM{del}) {
         $line->{tree_status},
         $line->{x},
         $line->{y},
-        $html->button('change', 'change', { TYPE => 'submit' }),
+        $html->button('chg', "index=".get_function_index('search_form')."&chg=1&search=asdf", { TYPE => 'submit' }),
         $html->button('del', 'del', { class => 'btn' }),
 
       );
 
     }
 
-
     print $table->show();
 
 
 
+
+
+#Change a tree
+if ($FORM{chg}) {
+
+   if ($FORM{change1}) {
+   
+   
+      $Trees->change(
+        {
+        ID    => $FORM{chg},
+        TREE_AGE    => $FORM{AGE},
+        TREE_HEIGHT => $FORM{HEIGHT},
+        TREE_CIRCLE => $FORM{CIRCLE},
+        TREE_TYPE   => $FORM{ADD_TREE_SORT},
+        TREE_STATUS => $FORM{STATUS},
+        X           => $FORM{X},
+        Y           => $FORM{Y}
+        }
+      );
+      if (!$Trees->{errno}) {
+        $html->message('info', $lang{SUCCESS});
+      }
+      else {
+        $html->message('err', $lang{ERROR}, $Trees->{errno} . " : " . $Trees->{errstr});
+      }
+    }
+else {
+
+     #my $Trees = Trees->new($db, $admin, \%conf);
+  #   my $doc = $Trees->info(1);
+      $html->tpl_show(
+        _include('trees_add', 'Trees'),
+        {
+       #   TREE_AGE    => $doc->{AGE},
+      ##    TREE_CIRCLE   => $doc->{CIRCLE},
+      #    TREE_TYPE    => $doc->{ADD_TREE_SORT},
+      #    TREE_STATUS    => $doc->{STATUS},
+      #    X           => $doc->{X},
+     #     Y           => $doc->{Y},
+        TREE_AGE    => $FORM{AGE},
+        TREE_HEIGHT => $FORM{HEIGHT},
+        TREE_CIRCLE => $FORM{CIRCLE},
+        TREE_TYPE   => $FORM{ADD_TREE_SORT},
+        TREE_STATUS => $FORM{STATUS},
+        COMMENT     => $FORM{COMMENT},
+        X           => $FORM{X},
+        Y           => $FORM{Y},
+          # SUBMIT  => $html->button('change', "index=".get_function_index('search_form')."&change1=1&chg=1&search=asdf", { TYPE => 'submit' }),
+          TITLE   => $lang{CHANGE},
+          ID      => $html->form_input('chg', $FORM{chg}, { TYPE => 'hidden' }),
+          ACTION => 'change',
+          ACTION_LANG => $lang{CHANGE},
+          SEARCH => 1,
+          CHANGE1 => 1,
+          CHG => 1
+     }
+      );
+    }
 }
+ 
+
+
+  }
+
+
+
+
+ 
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
 
 #**********************************************************
 
@@ -197,6 +265,8 @@ AGE => $rez_mid_age
 
 
 }
+
+
 
 
 

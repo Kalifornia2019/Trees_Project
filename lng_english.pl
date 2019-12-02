@@ -18,6 +18,7 @@ $lang{FROM_AGE} = 'Age from';
 $lang{O2} = 'The amount of generated oxygen, kg/day  : ';
 $lang{CO2} = 'The amount of generated carbon dioxide : kg/day: ';
 $lang{MID_AGE} = 'MIddle age of all trees ( years): ';
+$lang{CHANGE} = 'Change';
 1;
 
 

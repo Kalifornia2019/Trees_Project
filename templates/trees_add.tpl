@@ -2,6 +2,10 @@
 
     <input type='hidden' name='index' value=$index>
     <input type='hidden' name='ID' value='%ID%'>
+<input type='hidden' name='search' value='%SEARCH%'>
+<input type='hidden' name='change1' value='%CHANGE1%'>
+<input type='hidden' name='chg' value='%CHG%'>
+
 
     <div class='box box-form box-primary form-horizontal'>
         <div class='box-body'>
@@ -65,7 +69,7 @@
         </div>
 
         <div class='box-footer'>
-            %SUBMIT%
+             <input type='submit' class='btn btn-primary' value='%ACTION_LANG%' name='%ACTION%'>
         </div>
 
     </div>

@@ -78,9 +78,10 @@ sub search {
       WHERE => 1
     }
   );
-
+ 
+  my $we1 = $attr->{TREE_HEIGHT};
   my $we  = $attr->{TREE_AGE};
-  my $we1 = $attr->{TREE_AGE2};
+  
 
   if ($WHERE) {
 
@@ -191,6 +192,38 @@ sub search {
 
   }
 }
+
+
+#**********************************************************
+
+=head2 change($attr)
+ 
+=cut
+
+#**********************************************************
+sub change {
+  my $self = shift;
+  my ($attr) = @_;
+ #CHANGE_PARAM => 'ID',
+#Abills::Base::_bp($attr);
+$self->changes(
+    {
+      CHANGE_PARAM => 'ID',
+      TABLE        => 'trees',
+      DATA         => $attr
+    }
+  );
+
+return $self;
+}
+
+#tree_age=>$attr->{TREE_AGE}
+#return $self->query("UPDATE trees SET tree_age = TREE_AGE, tree_height = TREE_HEIGHT, tree_circle = TREE_CIRCLE, tree_type = TREE_TYPE, tree_status = TREE_STATUS, x = X, y = Y WHERE id = ID;",undef,{COLS_NAME => 1});
+
+
+
+
+
 
 #**********************************************************
 
