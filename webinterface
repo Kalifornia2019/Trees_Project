@@ -125,8 +125,6 @@ sub search_form {
       $html->message('err', $lang{ERROR}, $Trees->{errno} . " : " . $Trees->{errstr});
     }
 
-    # output header of table from search form
-
     my $table = $html->table(
       {
         width   => '100%',
@@ -154,7 +152,7 @@ sub search_form {
       }
     );
 
-    # output data of table from search form
+    # output data to the table from db
     foreach my $line (@$list) {
       my @fields_array = ();
 
@@ -181,6 +179,7 @@ sub search_form {
 
   }
 
+  # delete data from db
   if ($FORM{del}) {
     $Trees->del($FORM{del});
     if (!$Trees->{errno}) {
@@ -192,6 +191,8 @@ sub search_form {
   }
 
   my $button_edit = $html->form_input('chg', $lang{CHANGE}, { TYPE => 'submit' });
+
+  #Change tree in db
 
   if ($FORM{change}) {
 
@@ -212,7 +213,6 @@ sub search_form {
 
         TITLE => $lang{CHANGE},
 
-        #ID         => $html->form_input('change', $FORM{DRAW}, { TYPE => 'hidden' }),
         ID => $html->form_input('ID', $FORM{ID}, { TYPE => 'hidden' }),
       }
     );
@@ -222,27 +222,18 @@ sub search_form {
   if ($FORM{chg}) {
     $Trees->change(
       {
-        ID => $FORM{ID},
-
-        #INDEX         => $index,
+        ID          => $FORM{ID},
         TREE_AGE    => $FORM{TREE_AGE},
         TREE_HEIGHT => $FORM{TREE_HEIGHT},
         TREE_CIRCLE => $FORM{TREE_CIRCLE},
         TREE_TYPE   => $FORM{TREE_TYPE},
         TREE_STATUS => $FORM{TREE_STATUS},
-
-        #VALUE_X     => $FORM{VALUE_X},
-        # VALUE_Y     => $FORM{VALUE_Y},
-        COMMENT => $FORM{COMMENT},
+        COMMENT     => $FORM{COMMENT},
 
       }
     );
 
   }
-
-  #elsif ($FORM{CHANGE}) {
-  #$html->message('info', $lang{SUCCESS});
-  #}
 
   return 1;
 
@@ -284,3 +275,4 @@ sub search_count {
 }
 
 1;
+
