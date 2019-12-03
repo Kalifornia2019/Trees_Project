@@ -17,6 +17,12 @@ $lang{SUBMIT}='Submit';
 $lang{X} = 'Geolocation: Coordinate X';
 $lang{Y} = 'Geolocation: Coordinate Y';
 $lang{to}='to';
-
+$lang{FROM_AGE} = 'Age from (in years) ';
+$lang{TO_AGE} = 'Age to (in years)';
+$lang{O2} = 'The amount of oxygen produced: kg / day: ';
+$lang{CO2} = 'The amount of carbon dioxide produced: kg / day:';
+$lang{MID_AGE} = 'The average age of all trees (in years): ';
 
 1;
+
+

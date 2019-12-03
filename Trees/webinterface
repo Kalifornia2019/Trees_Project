@@ -11,11 +11,9 @@ use Abills::Base qw(time2sec);
 use Trees::db::Trees;
 use Data::Dumper;
 
-#our ($db, $admin, %conf, %lang, $html);
-#my $Trees = Trees->new($db, $admin, \%conf);
-
 our ($db, $admin, %conf, %lang, $html);
 our Trees $Trees = Trees->new($db, $admin, \%conf);
+
 #**********************************************************
 
 =head2 add_trees() 
@@ -28,8 +26,8 @@ our Trees $Trees = Trees->new($db, $admin, \%conf);
 sub add_trees {
   my $Trees       = Trees->new($db, $admin, \%conf);
   my $place       = 'Home';
-  my $value_x     = 48.537917;
-  my $value_y     = 25.024278;
+  my $value_x     = 48.529212;
+  my $value_y     = 25.048880;
   my $location_id = 1;
 
   if ($FORM{ADD}) {
@@ -52,9 +50,9 @@ sub add_trees {
     $html->message('err', $lang{ERROR}, $Trees->{errno} . " : " . $Trees->{errstr});
   }
   elsif ($FORM{CHANGE}) {
-   $Trees->species_change(\%FORM);
+    $Trees->species_change(\%FORM);
     $html->message('warn', $lang{ERROR}, $Trees->{errno} . " : " . $Trees->{errstr});
- }
+  }
 
   my $button_add = $html->form_input("ADD", $lang{ADD}, { TYPE => "submit" });
 
@@ -90,16 +88,17 @@ sub add_trees {
 =cut
 
 #**********************************************************
-sub search_form{
+sub search_form {
 
-  my $locations_arr;
-my $submit = $html->form_input('DRAW', $lang{EDIT}, { TYPE => 'submit' });
-  # Add search template 
+  my $submit = $html->form_input('DRAW', $lang{EDIT}, { TYPE => 'submit' });
+
+  # Add search template
   $html->tpl_show(
     _include('trees_seach', 'Trees'),
     {
       SEARCH => $html->form_input('search', $lang{TREE_SEARCH}, { TYPE => 'submit' }),
-      LOCATIONS_ARR => $locations_arr,
+
+      #LOCATIONS_ARR => $locations_arr,
 
     }
   );
@@ -108,7 +107,7 @@ my $submit = $html->form_input('DRAW', $lang{EDIT}, { TYPE => 'submit' });
     my $lest = $Trees->search(
       {
         TREE_AGE    => $FORM{AGE},
-        TREE_HEIGHT    => $FORM{HEIGHT},
+        TREE_HEIGHT => $FORM{HEIGHT},
         TREE_TYPE   => $FORM{ADD_TREE_SORT},
         TREE_STATUS => $FORM{STATUS},
 
@@ -123,15 +122,14 @@ my $submit = $html->form_input('DRAW', $lang{EDIT}, { TYPE => 'submit' });
     }
 
     # output header of table from search form
-
     my $table = $html->table(
       {
         width   => '100%',
         caption => 'Trees',
         border  => 2,
-        title   => [ 'id', $lang{TREE_AGE}, $lang{TREE_HEIGHT}, $lang{TREE_CIRCLE}, $lang{TREE_TYPE}, $lang{TREE_STATUS}, $lang{X}, $lang{Y},'-', '-' ],
-        cols_align => [ 'center', 'center', 'center', 'center', 'center', 'center', 'center' ],   
-        ID         => 'COMPANY_ID',
+        title   => [ 'id', $lang{DATE_ADD}, $lang{TREE_AGE}, $lang{TREE_HEIGHT}, $lang{TREE_CIRCLE}, $lang{TREE_TYPE}, $lang{TREE_STATUS}, $lang{X}, $lang{Y}, $lang{COMMENT}, '-', '-' ],
+        cols_align      => [ 'center', 'center', 'center', 'center', 'center', 'center', 'center','center', 'center' ],
+        ID              => 'COMPANY_ID',
         FUNCTION_FIELDS => 'del, change',
       }
     );
@@ -143,46 +141,59 @@ my $submit = $html->form_input('DRAW', $lang{EDIT}, { TYPE => 'submit' });
         TREE_CIRCLE => $FORM{CIRCLE},
         TREE_TYPE   => $FORM{ADD_TREE_SORT},
         TREE_STATUS => $FORM{STATUS},
-        VALUE_X           => $FORM{VALUE_X},
-        VALUE_Y           => $FORM{VALUE_Y},
- COMMENT          => $FORM{COMMENT},
+        VALUE_X     => $FORM{VALUE_X},
+        VALUE_Y     => $FORM{VALUE_Y},
+        COMMENT     => $FORM{COMMENT},
         ,
         COLS_NAME => 1
       }
     );
 
-   
+    #Derivation of the geolocation of the tree on the map
+    my $locations_arr;
+    foreach my $tree (@$list) {
 
- 
+      my $name = "<h3>" . $tree->{tree_type} . "</h3>" . "<b>Номер дерева: </b>" . $tree->{id} . "<br>" . "<b>Вік: </b>" . $tree->{tree_age} . "<br>" . "<b>Статус: </b>" . $tree->{tree_status};
+      $locations_arr .= "[\"" . $name . "\"," . $tree->{value_x} . "," . $tree->{value_y} . "," . $tree->{id} . "],";
+    }
+    #Abills::Base::_bp("", $locations_arr);
+    $html->tpl_show(
+      _include('location', 'Trees'),
+      {
+        LOCATIONS_ARR => $locations_arr,
+
+      }
+    );
+
     # output data of table from search form
     foreach my $line (@$list) {
       my @fields_array = ();
 
-    push @fields_array, $line->{"id"};
-    push @fields_array, $line->{"tree_age"};
-    push @fields_array, $line->{"tree_height"};
-    push @fields_array, $line->{"tree_circle"};
-    push @fields_array, $line->{"tree_type"};
-    push @fields_array, $line->{"tree_status"};
-    push @fields_array, $line->{"value_x"};
-    push @fields_array, $line->{"value_y"};
-    push @fields_array, $line->{"comment"};
+      push @fields_array, $line->{"id"};
+      push @fields_array, $line->{"date"};
+      push @fields_array, $line->{"tree_age"};
+      push @fields_array, $line->{"tree_height"};
+      push @fields_array, $line->{"tree_circle"};
+      push @fields_array, $line->{"tree_type"};
+      push @fields_array, $line->{"tree_status"};
+      push @fields_array, $line->{"value_x"};
+      push @fields_array, $line->{"value_y"};
+      push @fields_array, $line->{"comment"};
 
-    push @fields_array,
-    ($html->button($lang{CHANGE}, "index=$index&ID=$line->{id}&AGE=$line->{tree_age}&HEIGHT=$line->{tree_height}&CIRCLE=$line->{tree_circle}&SORT=$line->{tree_type}&STATUS=$line->{tree_status}&COMMENT=$line->{comment}&EDIT=1" . _translate($line->{position}), { class => 'change' }));
-    push @fields_array, ($html->button($lang{DELETE}, "index=$index&del=$line->{id}" . _translate($line->{position}), { class => 'del' }));
+      push @fields_array,
+      ($html->button($lang{CHANGE}, "index=$index&ID=$line->{id}&AGE=$line->{tree_age}&HEIGHT=$line->{tree_height}&CIRCLE=$line->{tree_circle}&SORT=$line->{tree_type}&STATUS=$line->{tree_status}&COMMENT=$line->{comment}&change=1" . _translate($line->{position}), { class => 'change' }));
+      push @fields_array, ($html->button($lang{DELETE}, "index=$index&del=$line->{id}" . _translate($line->{position}), { class => 'del' }));
 
-    $table->addrow(@fields_array);
-
-     
+      $table->addrow(@fields_array);
 
     }
 
     print $table->show();
 
-}
+  }
 
- if ($FORM{del}) {
+  #Tree removal
+  if ($FORM{del}) {
     $Trees->del($FORM{del});
     if (!$Trees->{errno}) {
       $html->message('info', $lang{SUCCESS});
@@ -192,86 +203,93 @@ my $submit = $html->form_input('DRAW', $lang{EDIT}, { TYPE => 'submit' });
     }
   }
 
-my $button_edit   = $html->form_input('change', $lang{CHANGE}, {TYPE => 'submit'});
+  my $button_edit = $html->form_input('chg', $lang{CHANGE}, { TYPE => 'submit' });
 
-    if ($FORM{change}) {
-Abills::Base::_bp("", \%FORM);
-      $Trees->change({
-        ID            => $FORM{ID},
+  #Tree editing
+  if ($FORM{change}) {
+    Abills::Base::_bp("", \%FORM);
+    $html->tpl_show(
+      _include('trees_change', 'Trees'),
+      {
+        ID          => $FORM{ID},
+        INDEX       => $index,
+        AGE         => $html->form_input('TREE_AGE', $FORM{AGE}),
+        HEIGHT      => $html->form_input('TREE_HEIGHT', $FORM{HEIGHT}),
+        CIRCLE      => $html->form_input('TREE_CIRCLE', $FORM{CIRCLE}),
+        SORT        => $html->form_input('TREE_TYPE', $FORM{SORT}),
+        STATUS      => $html->form_input('TREE_STATUS', $FORM{STATUS}),
+        COMMENT     => $html->form_input('COMMENT', $FORM{COMMENT}),
+        VALUE_X     => $html->form_input('VALUE_X', $FORM{VALUE_X}),
+        VALUE_Y     => $html->form_input('VALUE_Y', $FORM{VALUE_Y}),
+        BUTTON_EDIT => $button_edit,
+
+        TITLE => $lang{CHANGE},
+
+        #ID         => $html->form_input('change', $FORM{DRAW}, { TYPE => 'hidden' }),
+        ID => $html->form_input('ID', $FORM{ID}, { TYPE => 'hidden' }),
+      }
+    );
+
+  }
+
+  if ($FORM{chg}) {
+    $Trees->change(
+      {
+        ID => $FORM{ID},
+
         #INDEX         => $index,
         TREE_AGE    => $FORM{TREE_AGE},
-       TREE_HEIGHT => $FORM{TREE_HEIGHT},
+        TREE_HEIGHT => $FORM{TREE_HEIGHT},
         TREE_CIRCLE => $FORM{TREE_CIRCLE},
         TREE_TYPE   => $FORM{TREE_TYPE},
-       TREE_STATUS => $FORM{TREE_STATUS},
+        TREE_STATUS => $FORM{TREE_STATUS},
+
         #VALUE_X     => $FORM{VALUE_X},
-      # VALUE_Y     => $FORM{VALUE_Y},
-        COMMENT     => $FORM{COMMENT},
- 
-      });
-} elsif ($FORM{CHANGE}) {
-  $html->message('info', $lang{SUCCESS});
-}
-      
-  
-      $html->tpl_show(_include('trees_change', 'Trees'), {
- ID            => $FORM{ID},
-        INDEX         => $index,
-      AGE         => $html->form_input('TREE_AGE', $FORM{AGE}),
-      HEIGHT      => $html->form_input('TREE_HEIGHT', $FORM{HEIGHT}),
-      CIRCLE      => $html->form_input('TREE_CIRCLE', $FORM{CIRCLE}),
- SORT        => $html->form_input('TREE_TYPE', $FORM{SORT}),
-      STATUS      => $html->form_input('TREE_STATUS', $FORM{STATUS}),
-      COMMENT     => $html->form_input('COMMENT', $FORM{COMMENT}),
-      VALUE_X     => $html->form_input('VALUE_X', $FORM{VALUE_X}),
-      VALUE_Y     => $html->form_input('VALUE_Y', $FORM{VALUE_Y}),
-       BUTTON_EDIT   => $button_edit,
-      
-        
-        TITLE      => $lang{CHANGE},
-        #ID         => $html->form_input('change', $FORM{DRAW}, { TYPE => 'hidden' }),
-        ID         => $html->form_input('ID', $FORM{ID}, { TYPE => 'hidden' }),
-      });
-  
-   return 1;
+        # VALUE_Y     => $FORM{VALUE_Y},
+        COMMENT => $FORM{COMMENT},
+
+      }
+    );
+
+  }
+
+  return 1;
 }
 
 #**********************************************************
 
 =head2 search_count() 
-  add_trees
+  
   Returns:
   1
 =cut
 
 #**********************************************************
+#additional algorithms
 sub search_count {
-    my $Trees = Trees->new($db, $admin, \%conf);
-    
+  my $Trees = Trees->new($db, $admin, \%conf);
 
-my $result = $Trees->search_count();
-my $count = $result->[0]->{number_trees};
-my $count_age = $result->[0]->{sage_trees};
+  my $result    = $Trees->search_count();
+  my $count     = $result->[0]->{number_trees};
+  my $count_age = $result->[0]->{sage_trees};
 
+  if ($result) {
 
- if ( $result ){
+    my $rez_o2      = ($count * 2.5);
+    my $rez_co2     = ($count * 1.7);
+    my $rez_mid_age = ($count_age / $count);
+    $html->tpl_show(
+      _include('additional_parametres', 'Trees'),
+      {
+        O2  => $rez_o2,
+        CO2 => $rez_co2,
+        AGE => $rez_mid_age
+      },
 
-my $rez_o2 = ($count*2.5);
-my $rez_co2 = ($count*1.7);
-my $rez_mid_age = ($count_age/$count);
- $html->tpl_show(
-    _include('additional_parametres', 'Trees'),{O2 => $rez_o2,
-CO2 => $rez_co2,
-AGE => $rez_mid_age 
-},
-
-);
-}
-
+    );
+  }
 
   return 1;
 }
 
-
 1;
-
