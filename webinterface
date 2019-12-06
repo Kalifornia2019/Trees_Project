@@ -96,33 +96,18 @@ sub search_form {
   $html->tpl_show(
     _include('trees_seach', 'Trees'),
     {
-        AGE    => $html->form_input('AGE', $FORM{age}),
-        HEIGHT => $html->form_input('HEIGHT', $FORM{height}),
-        ADD_TREE_SORT   => $html->form_input('ADD_TREE_SORT', $FORM{add_tree_sort}),
-        STATUS => $html->form_input('STATUS', $FORM{status}),
-        SEARCH => $html->form_input('search', $lang{TREE_SEARCH}, { TYPE => 'submit' }),
+      AGE           => $html->form_input('AGE',           $FORM{age}),
+      HEIGHT        => $html->form_input('HEIGHT',        $FORM{height}),
+      ADD_TREE_SORT => $html->form_input('ADD_TREE_SORT', $FORM{add_tree_sort}),
+      STATUS        => $html->form_input('STATUS',        $FORM{status}),
+      SEARCH        => $html->form_input('search',        $lang{TREE_SEARCH}, { TYPE => 'submit' }),
+
       #LOCATIONS_ARR => $locations_arr,
 
     }
   );
 
   if ($FORM{search}) {
-    my $lest = $Trees->search(
-      {
-        TREE_AGE    => $FORM{AGE},
-        TREE_HEIGHT => $FORM{HEIGHT},
-        TREE_TYPE   => $FORM{ADD_TREE_SORT},
-        TREE_STATUS => $FORM{STATUS},
-
-      }
-    );
-    if (!$Trees->{errno}) {
-      $html->message('info', $lang{SUCCESS});
-
-    }
-    else {
-      $html->message('err', $lang{ERROR}, $Trees->{errno} . " : " . $Trees->{errstr});
-    }
 
     # output header of table from search form
     my $table = $html->table(
@@ -131,28 +116,71 @@ sub search_form {
         caption => 'Trees',
         border  => 2,
         title   => [ 'id', $lang{DATE_ADD}, $lang{TREE_AGE}, $lang{TREE_HEIGHT}, $lang{TREE_CIRCLE}, $lang{TREE_TYPE}, $lang{TREE_STATUS}, $lang{X}, $lang{Y}, $lang{COMMENT}, '-', '-' ],
-        cols_align      => [ 'center', 'center', 'center', 'center', 'center', 'center', 'center','center', 'center' ],
+        cols_align      => [ 'center', 'center', 'center', 'center', 'center', 'center', 'center', 'center', 'center' ],
         ID              => 'COMPANY_ID',
         FUNCTION_FIELDS => 'del, change',
       }
     );
 
-    my $list = $Trees->search(
-      {
-        TREE_AGE    => $FORM{AGE},
-        TREE_HEIGHT => $FORM{HEIGHT},
-        TREE_CIRCLE => $FORM{CIRCLE},
-        TREE_TYPE   => $FORM{ADD_TREE_SORT},
-        TREE_STATUS => $FORM{STATUS},
-        VALUE_X     => $FORM{VALUE_X},
-        VALUE_Y     => $FORM{VALUE_Y},
-        COMMENT     => $FORM{COMMENT},
-        ,
-        COLS_NAME => 1
-      }
-    );
+    my $list;
 
+    # check condition of existence AGE_FROM and AGE_TO (HEIGHT) to form right query to db, take list of data from db
 
+    if ($FORM{AGE} && $FORM{HEIGHT}) {
+      $list = $Trees->search(
+        {
+          TREE_TYPE   => $FORM{ADD_TREE_SORT},
+          TREE_STATUS => $FORM{STATUS},
+          TREE_AGE    => ">=$FORM{AGE}",
+          TREE_HEIGHT => "<=$FORM{HEIGHT}",
+          COLS_NAME   => 1.
+        }
+      );
+    }
+    elsif ($FORM{AGE} && !$FORM{HEIGHT}) {
+      $list = $Trees->search(
+        {
+          TREE_TYPE   => $FORM{ADD_TREE_SORT},
+          TREE_STATUS => $FORM{STATUS},
+          TREE_AGE    => ">=$FORM{AGE}",
+          TREE_HEIGHT => $FORM{HEIGHT},
+          COLS_NAME   => 1.
+        }
+      );
+
+    }
+    elsif (!$FORM{AGE} && $FORM{HEIGHT}) {
+      $list = $Trees->search(
+        {
+          TREE_TYPE   => $FORM{ADD_TREE_SORT},
+          TREE_STATUS => $FORM{STATUS},
+          TREE_AGE    => $FORM{AGE},
+          TREE_HEIGHT => "<=$FORM{HEIGHT}",
+          COLS_NAME   => 1.
+        }
+      );
+    }
+    else {
+
+      $list = $Trees->search(
+        {
+          TREE_TYPE   => $FORM{ADD_TREE_SORT},
+          TREE_STATUS => $FORM{STATUS},
+          TREE_AGE    => $FORM{AGE},
+          TREE_HEIGHT => $FORM{HEIGHT},
+          COLS_NAME   => 1.
+        }
+      );
+
+    }
+
+    if (!$Trees->{errno}) {
+      $html->message('info', $lang{SUCCESS});
+
+    }
+    else {
+      $html->message('err', $lang{ERROR}, $Trees->{errno} . " : " . $Trees->{errstr});
+    }
 
     # output data of table from search form
     foreach my $line (@$list) {
@@ -185,6 +213,7 @@ sub search_form {
       my $name = "<h3>" . $tree->{tree_type} . "</h3>" . "<b>Номер дерева: </b>" . $tree->{id} . "<br>" . "<b>Вік: </b>" . $tree->{tree_age} . "<br>" . "<b>Статус: </b>" . $tree->{tree_status};
       $locations_arr .= "[\"" . $name . "\"," . $tree->{value_x} . "," . $tree->{value_y} . "," . $tree->{id} . "],";
     }
+
     #Abills::Base::_bp("", $locations_arr);
     $html->tpl_show(
       _include('location', 'Trees'),
@@ -297,3 +326,4 @@ sub search_count {
 }
 
 1;
+

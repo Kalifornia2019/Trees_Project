@@ -48,132 +48,27 @@ sub search {
   my $self = shift;
   my ($attr) = @_;
 
+  # Abills::Base::_bp('tetrs','TREE_AGE');
   my $WHERE = $self->search_former(
     $attr,
-    [ [ 'TREE_TYPE', 'INT', 'd.TREE_TYPE', 1 ], 
-      [ 'TREE_STATUS', 'INT', 'd.TREE_STATUS', 1 ], 
-],
+    [ [ 'TREE_TYPE', 'INT', 'd.TREE_TYPE', 1 ], [ 'TREE_STATUS', 'INT', 'd.TREE_STATUS', 1 ], [ 'TREE_AGE', 'INT', 'd.TREE_AGE', 1 ], [ 'TREE_HEIGHT', 'INT', 'd.TREE_AGE', 1 ], ],
     {
       WHERE => 1
     }
   );
 
-
-
- # $self->query(
-  #  "SELECT * FROM crm_progressbar_steps
-    # WHERE id = ?;", undef, { INFO => 1, Bind => [ $attr->{ID} ] }
-  #);
-
-
-
-
-  my $we1 = $attr->{TREE_HEIGHT};
-  my $we  = $attr->{TREE_AGE};
-
-  if ($WHERE) {
-
-    if ($we) {
-      if ($we1) {
-        
-        $self->query(
-          "SELECT
+  $self->query(
+    "SELECT
     $self->{SEARCH_FIELDS}
-    id, date, tree_age, tree_height, tree_circle, tree_type, tree_status,comment, value_x,value_y 
-    FROM trees d
-    WHERE tree_age>=? AND tree_age<=? ; 
-     ",
-          undef,
-          { INFO => 1, Bind => [ $attr-> {TREE_AGE}, $attr-> {TREE_HEIGHT} ] }
-        );
-
-        return $self->{list};
-      }
-
-      else {
-        
-        $self->query(
-          "SELECT
-    $self->{SEARCH_FIELDS}
-    id, date, tree_age, tree_height, tree_circle, tree_type, tree_status,comment, value_x,value_y 
-    FROM trees d
-    WHERE tree_age>=? ;
-     ",
-          undef,
-           { INFO => 1, Bind => [ $attr-> {TREE_AGE} ] }
-        );
-
-        return $self->{list};
-
-      }
-
-    }
-    else {
-      $self->query(
-        "SELECT
-    $self->{SEARCH_FIELDS}
-    id, date, tree_age, tree_height, tree_circle, tree_type, tree_status,comment, value_x,value_y 
+     id, date, tree_age, tree_height, tree_circle, tree_type, tree_status,comment, value_x,value_y 
     FROM trees d
     $WHERE; 
      ",
-        undef,
-       $attr
-      );
+    undef,
+    $attr
+  );
 
-      return $self->{list};
-    }
-
-  }
-
-  if (!$WHERE) {
-
-    if ($we) {
-      if ($we1) {
-        $self->query(
-          "SELECT
-    $self->{SEARCH_FIELDS}
-    id, date, tree_age, tree_height, tree_circle, tree_type, tree_status,comment, value_x,value_y 
-    FROM trees d
-    WHERE tree_age>=? AND tree_age<=? ;  
-     ",
-          undef,
-           { INFO => 1, Bind => [ $attr-> {TREE_AGE}, $attr-> {TREE_HEIGHT} ] }
-        );
-
-        return $self->{list};
-      }
-
-      else {
-        $self->query(
-          "SELECT
-    $self->{SEARCH_FIELDS}
-    id, date, tree_age, tree_height, tree_circle, tree_type, tree_status,comment, value_x,value_y 
-    FROM trees d
-    WHERE tree_age>=? ; 
-     ",
-          undef,
-           { INFO => 1, Bind => [ $attr-> {TREE_AGE} ] }
-        );
-        return $self->{list};
-      }
-    }
-
-    else {
-      $self->query(
-        "SELECT
-    $self->{SEARCH_FIELDS}
-    id, date, tree_age, tree_height, tree_circle, tree_type, tree_status,comment, value_x,value_y 
-    FROM trees d
-    $WHERE; 
-     ",
-        undef,
-        $attr
-      );
-
-      return $self->{list};
-    }
-
-  }
+  return $self->{list};
 
   1;
 }
@@ -279,3 +174,4 @@ sub search_count {
 }
 
 1;
+
