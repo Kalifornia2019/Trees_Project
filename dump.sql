@@ -1,0 +1,59 @@
+-- MySQL dump 10.13  Distrib 5.7.28, for Linux (x86_64)
+--
+-- Host: localhost    Database: abills
+-- ------------------------------------------------------
+-- Server version	5.7.28-0ubuntu0.18.04.4
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `trees`
+--
+
+DROP TABLE IF EXISTS `trees`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `trees` (
+  `id` int(45) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id of table',
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `tree_age` int(45) NOT NULL COMMENT 'age of tree',
+  `tree_height` int(45) NOT NULL COMMENT 'height of tree',
+  `tree_circle` int(45) NOT NULL COMMENT 'circumference of tree',
+  `tree_type` varchar(45) NOT NULL DEFAULT '' COMMENT 'type of tree',
+  `tree_status` varchar(100) NOT NULL DEFAULT '' COMMENT 'status of tree',
+  `value_x` double(20,14) NOT NULL DEFAULT '0.00000000000000',
+  `value_y` double(20,14) NOT NULL DEFAULT '0.00000000000000',
+  `comment` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `trees`
+--
+
+LOCK TABLES `trees` WRITE;
+/*!40000 ALTER TABLE `trees` DISABLE KEYS */;
+INSERT INTO `trees` VALUES (19,'2019-11-29 09:58:52',50,12,2,'дуб11111','доросле',48.53022720000000,25.04048640000000,''),(22,'2019-11-29 12:22:02',5,4,1,'акація','молоде',48.53022720000000,25.04048640000000,'працює'),(23,'2019-11-29 13:39:13',100,25,10,'супер дерево','могутнє',48.53022720000000,25.04048640000000,'УРААА!!!'),(28,'2019-12-01 07:27:45',15,8,3,'тополь','молоде',48.53166850000000,25.04120330000000,NULL),(32,'2019-12-01 14:53:51',1,1,1,'дуб','молоде',48.53139590000001,25.04121160000000,'111111'),(33,'2019-12-01 15:07:35',0,35,15,'klen','могутнє',48.53139590000001,25.04121160000000,NULL),(34,'2019-12-01 16:35:18',30,30,30,'дуб','молоде1111',48.53139590000001,25.04121160000000,''),(38,'2019-12-02 12:31:27',10,12,5,'дуб','доросле',48.53022720000000,25.04048640000000,'нарешті працює'),(39,'2019-12-02 12:53:01',40,10,4,'клен','доросле',48.53022720000000,25.04048640000000,'good'),(42,'2019-12-02 16:11:03',100,10,3,'дуб','доросле',48.53049710000000,25.04122700000000,''),(44,'2019-12-03 10:17:05',25,10,2,'смерека','доросле',48.53049710000000,25.04122700000000,'працює ураааааа!!!!!');
+/*!40000 ALTER TABLE `trees` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2019-12-03 12:40:04

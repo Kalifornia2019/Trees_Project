@@ -13,7 +13,7 @@
       </div>
    </div>
    <div class='box-footer'>
-      <img src="/img/func1.jpg">
+      <img src="../img/func1.jpg">
    </div>
    </div>
    <div class="col-md-6 col-sm-4">
