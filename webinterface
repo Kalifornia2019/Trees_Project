@@ -198,7 +198,8 @@ sub search_form {
       push @fields_array, $line->{"comment"};
       push @fields_array,
       ($html->button($lang{CHANGE}, "index=$index&ID=$line->{id}&AGE=$line->{tree_age}&HEIGHT=$line->{tree_height}&CIRCLE=$line->{tree_circle}&SORT=$line->{tree_type}&STATUS=$line->{tree_status}&COMMENT=$line->{comment}&change=1" . _translate($line->{position}), { class => 'change' }));
-      push @fields_array, ($html->button($lang{DELETE}, "index=$index&del=$line->{id}" . _translate($line->{position}), { class => 'del' }));
+
+      push @fields_array, ($html->button($lang{DELETE}, "index=$index&del=$line->{id}" . _translate($line->{position}), { class => 'del', MESSAGE => "$lang{DEL} $FORM{SORT}", }));
 
       $table->addrow(@fields_array);
 
@@ -226,8 +227,14 @@ sub search_form {
   }
 
   #Tree removal
+
+
   if ($FORM{del}) {
+  
+
+
     $Trees->del($FORM{del});
+
     if (!$Trees->{errno}) {
       $html->message('info', $lang{SUCCESS});
     }
@@ -255,7 +262,7 @@ sub search_form {
         VALUE_X     => $html->form_input('VALUE_X', $FORM{VALUE_X}),
         VALUE_Y     => $html->form_input('VALUE_Y', $FORM{VALUE_Y}),
         BUTTON_EDIT => $button_edit,
-
+       # BUTTON_DELETE => $delete_button,
         TITLE => $lang{CHANGE},
 
         #ID         => $html->form_input('change', $FORM{DRAW}, { TYPE => 'hidden' }),
@@ -326,4 +333,7 @@ sub search_count {
 }
 
 1;
+
+
+
 
